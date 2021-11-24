@@ -14,6 +14,7 @@
         <Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask :feedback='false' placeholder="Password"></Password>
         <small v-if="(v$.password.$invalid && submitted) || v$.password.$pending.$response" class="p-error">{{v$.password.required.$message.replace('Value', 'Password')}}</small>
       </div>
+      <small v-if="error" class="p-error">{{ error }}</small>
     <Button type="submit" label="Submit" class="p-mt-2" />
   </form>
 </template>
@@ -21,11 +22,16 @@
 
 <script>
 import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import useVuelidate from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
+import useLogin from '../composables/useLogin'
 
 export default {
   setup () {
+    const { login, error } = useLogin()
+    const router = useRouter()
+
     const state = reactive({
       email: '',
       password: ''
@@ -42,9 +48,14 @@ export default {
 
     const handleSubmit = async (isFormValid) => {
             submitted.value = true;
+            await login(state.email, state.password)
 
             if (!isFormValid) {
                 return;
+            }
+            
+            if (!error.value) {
+              router.push('/dashboard')
             }
             
             console.log('CORRECT WORKING')
@@ -58,7 +69,7 @@ export default {
             submitted.value = false;
     }
 
-    return { state, v$, handleSubmit, submitted }
+    return { state, v$, handleSubmit, submitted, error}
   }
 }
 </script>

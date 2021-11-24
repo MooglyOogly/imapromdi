@@ -2,13 +2,14 @@
   <form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
     <!-- Name Input and Validation -->
     <div>
-      <InputText v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" placeholder="Name"/>
+      <InputText v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" placeholder="Name*"/>
       <small v-if="(v$.name.$invalid && submitted) || v$.name.$pending.$response" class="p-error">{{v$.name.required.$message.replace('Value', 'Name')}}</small>
     </div>
 
     <!-- Email Input and Validation -->
-    <div>
-      <InputText v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error" placeholder="Email"/>
+    <div class="p-input-icon-right">
+      <i class="pi pi-envelope" />
+      <InputText v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error" placeholder="Email*"/>
         <span v-if="v$.email.$error && submitted">
           <span id="email-error" v-for="(error, index) of v$.email.$errors" :key="index">
             <small class="p-error">{{error.$message}}</small>
@@ -18,14 +19,15 @@
     </div>
 
     <!-- Contact Number Input and Validation -->
-    <div class="p-field">
-      <InputMask v-model="v$.contact.$model" :class="{'p-invalid':v$.contact.$invalid && submitted}" mask="+63999-999-9999" placeholder="Contact Number"/>
-        <span v-if="v$.contact.$error && submitted">
-          <span id="contact-error" v-for="(error, index) of v$.contact.$errors" :key="index">
-            <small class="p-error">{{error.$message}}</small>
+    <div class="p-field p-input-icon-right">
+      <i class="pi pi-mobile" />
+      <InputMask v-model="v$.phoneNumber.$model" :class="{'p-invalid':v$.phoneNumber.$invalid && submitted}" mask="+639999999999" placeholder="Contact Number*"/>
+        <span v-if="v$.phoneNumber.$error && submitted">
+          <span id="contact-error" v-for="(error, index) of v$.phoneNumber.$errors" :key="index">
+            <small class="p-error">{{error.$message.replace('Value', 'Contact')}}</small>
           </span>
         </span>
-      <small v-else-if="(v$.contact.$invalid && submitted) || v$.contact.$pending.$response" class="p-error">{{v$.contact.required.$message.replace('Value', 'Contact')}}</small>
+      <small v-else-if="(v$.phoneNumber.$invalid && submitted) || v$.phoneNumber.$pending.$response" class="p-error">{{v$.phoneNumber.required.$message.replace('Value', 'Contact')}}</small>
     </div>
 
     <!-- Barangay Input and Validation -->
@@ -35,7 +37,7 @@
 
     <!-- Password Input and Validation -->
     <div>
-      <Password v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask placeholder="Password">
+      <Password v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask placeholder="Password*">
         <template #header>
           <h5>Pick a password</h5>
         </template>
@@ -54,24 +56,30 @@
 
     <!-- Confirm Password Input and Validation -->
     <div>
-      <Password v-model="v$.confirmPassword.$model" :class="{'p-invalid':v$.confirmPassword.$invalid && submitted}" toggleMask :feedback=false placeholder=" Confirm Password"></Password>
+      <Password v-model="v$.confirmPassword.$model" :class="{'p-invalid':v$.confirmPassword.$invalid && submitted}" toggleMask :feedback=false placeholder="Confirm Password*"></Password>
         <span v-if="v$.confirmPassword.$error && submitted">
             <small class="p-error">{{v$.confirmPassword.sameAsPass.$message.replace(/value/g, 'password')}}</small>
         </span>
       <small v-else-if="(v$.confirmPassword.$invalid && submitted) || v$.confirmPassword.$pending.$response" class="p-error">{{v$.confirmPassword.required.$message.replace('Value', 'Password')}}</small>
     </div>
-    
+    <small v-if="error" class="p-error">{{ error }}</small>
+
     <Button type="submit" label="Register" class="p-mt-2" />
   </form>
 </template>
 
 <script>
 import { computed, reactive, ref } from "vue";
+import { useRouter } from 'vue-router'
 import { email, required, sameAs } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
+import useSignup from '../composables/useSignup'
 
 export default {
   setup() {
+    const { signup, error } = useSignup()
+    const router = useRouter()
+
     const barangays = ref([
             {name: 'New York', code: 'NY'},
             {name: 'Rome', code: 'RM'},
@@ -83,7 +91,7 @@ export default {
     const state = reactive({
       name: '',
       email: '',
-      contact: '',
+      phoneNumber: '',
       password: '',
       confirmPassword: '',
     })
@@ -91,7 +99,7 @@ export default {
     const rules = computed(() => ({
       name: { required },
       email: { required, email },
-      contact: { required },
+      phoneNumber: { required },
       password: { required },
       confirmPassword: {  required, sameAsPass: sameAs(state.password) }
     }))
@@ -101,30 +109,35 @@ export default {
     
     const v$ = useVuelidate(rules, state)
 
-    const handleSubmit = (isFormValid) => {
+    const handleSubmit = async (isFormValid) => {
             submitted.value = true;
+            
+            console.log(state.phoneNumber)
 
             if (!isFormValid) {
                 return;
             }
+
+            await signup(state.email, state.password, state.name, state.phoneNumber, barangay.value)
             
-            console.log('CORRECT WORKING')
-            console.log(state.name)
-            console.log(state.password)
-            resetForm()
+            if (!error.value) {
+              router.push('/dashboard')
+              resetForm()
+            }
+            
         }
 
     const resetForm = () => {
             state.name = '';
             state.email = '';
-            state.contact = '';
+            state.phoneNumber = '';
             barangay.value = '';
             state.password = '';
             state.confirmPassword = '';
             submitted.value = false;
     }
 
-    return { state, v$, handleSubmit, submitted, barangays, barangay }
+    return { state, v$, handleSubmit, submitted, barangays, barangay, error }
   }
 };
 </script>

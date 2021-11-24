@@ -17,7 +17,7 @@
 
 <script>
 import LoginForm from '../components/LoginForm.vue'
-import RegisterForm from '../components/RegisterFrom.vue'
+import RegisterForm from '../components/RegisterForm.vue'
 import {ref} from 'vue'
 
 export default {
