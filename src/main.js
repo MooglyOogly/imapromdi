@@ -12,10 +12,14 @@ import InputText from 'primevue/inputtext'
 import Password from 'primevue/password'
 import Calendar from 'primevue/calendar'
 import InputMask from 'primevue/inputmask'
+import Sidebar from 'primevue/sidebar'
+import Menu from 'primevue/menu'
+import OverlayPanel from 'primevue/overlaypanel'
 
 // PrimeVue Imports
 import 'primevue/resources/themes/lara-light-teal/theme.css'  //theme
 import 'primevue/resources/primevue.min.css'                 //core css
+import 'primeflex/primeflex.css'
 import 'primeicons/primeicons.css'                           //icons
 import './assets/main.css'
 
@@ -33,5 +37,8 @@ app.component('InputText', InputText)
 app.component('InputMask', InputMask)
 app.component('Password', Password)
 app.component('Calendar', Calendar)
+app.component('Sidebar', Sidebar)
+app.component('Menu', Menu)
+app.component('OverlayPanel', OverlayPanel)
 
 app.mount("#app");

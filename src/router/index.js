@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 // View Components
-import Welcome from '../views/Welcome.vue'
-import Dashboard from '../views/Dashboard.vue'
+import Login from '../views/Login.vue'
+import Home from '../views/Home.vue'
+import FarmInfo from '../views/FarmInfo.vue'
 
 // Firebase Imports
 import { auth } from '../firebase/config'
@@ -10,7 +11,7 @@ import { auth } from '../firebase/config'
 const requireAuth = (to, from, next) => {
   let user = auth.currentUser
   if (!user) {
-    next({ name: 'Welcome' })
+    next({ name: 'Login' })
   } else {
     next()
   }
@@ -19,14 +20,19 @@ const requireAuth = (to, from, next) => {
 const routes = [
   {
     path: '/',
-    name: 'Welcome',
-    component: Welcome 
+    name: 'Login',
+    component: Login 
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: Dashboard,
-    beforeEnter: requireAuth
+    path: '/home',
+    name: 'Home',
+    component: Home,
+    // beforeEnter: requireAuth
+  },
+  {
+    path: '/farminfo',
+    name: 'FarmInfo',
+    component: FarmInfo
   }
 ]
 

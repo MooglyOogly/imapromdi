@@ -55,7 +55,7 @@ export default {
             }
             
             if (!error.value) {
-              router.push('/dashboard')
+              router.push('/home')
             }
             
             console.log('CORRECT WORKING')

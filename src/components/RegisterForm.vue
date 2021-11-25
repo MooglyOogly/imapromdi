@@ -121,7 +121,7 @@ export default {
             await signup(state.email, state.password, state.name, state.phoneNumber, barangay.value)
             
             if (!error.value) {
-              router.push('/dashboard')
+              router.push('/home')
               resetForm()
             }
             
