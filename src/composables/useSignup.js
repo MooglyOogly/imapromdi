@@ -3,12 +3,12 @@ import { ref } from 'vue'
 // Firebase Imports
 import { auth, db } from '../firebase/config'
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
-import { doc, setDoc } from 'firebase/firestore'
+import { doc, setDoc, collection, addDoc } from 'firebase/firestore'
 
 const error = ref(null)
 const isPending = ref(false)
 
-const signup = async (email, password, displayName, phoneNumber, barangay) => {
+const signup = async (email, password, displayName, phoneNumber, barangay, userType) => {
   error.value = null
   isPending.value = true
   
@@ -21,12 +21,24 @@ const signup = async (email, password, displayName, phoneNumber, barangay) => {
     
     const user = ref(auth.currentUser)
     
-    await setDoc(doc(db, "users", user.value.uid), {
-      barangay: barangay,
-      phoneNumber: phoneNumber,
-      type: 'farmer',
-    })
-    
+    if(userType === 'Farmer') {
+      await addDoc(collection(db, "users"), {
+        barangay: barangay,
+        phoneNumber: phoneNumber,
+        type: userType,
+        userId: user.value.uid,
+        farmId: ''
+      })
+    } else {
+      await addDoc(collection(db, "users"), {
+        barangay: barangay,
+        phoneNumber: phoneNumber,
+        type: userType,
+        userId: user.value.uid,
+        marketId: ''
+      })
+    }
+
     error.value = null
     isPending.value = false
   }

@@ -14,7 +14,13 @@ import Calendar from 'primevue/calendar'
 import InputMask from 'primevue/inputmask'
 import Sidebar from 'primevue/sidebar'
 import Menu from 'primevue/menu'
+import Menubar from 'primevue/menubar'
 import OverlayPanel from 'primevue/overlaypanel'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+import ColumnGroup from 'primevue/columngroup'
+import Chart from 'primevue/chart'
+import Card from 'primevue/card'
 
 // PrimeVue Imports
 import 'primevue/resources/themes/lara-light-teal/theme.css'  //theme
@@ -39,6 +45,12 @@ app.component('Password', Password)
 app.component('Calendar', Calendar)
 app.component('Sidebar', Sidebar)
 app.component('Menu', Menu)
+app.component('Menubar', Menubar)
 app.component('OverlayPanel', OverlayPanel)
+app.component('DataTable', DataTable)
+app.component('Column', Column)
+app.component('ColumnGroup', ColumnGroup)
+app.component('Chart', Chart)
+app.component('Card', Card)
 
 app.mount("#app");

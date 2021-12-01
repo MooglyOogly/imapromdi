@@ -32,7 +32,11 @@
 
     <!-- Barangay Input and Validation -->
     <div class="p-field">
-      <Dropdown v-model="barangay" :options="barangays" optionLabel="name" placeholder="Select a Barangay"/>
+      <Dropdown v-model="barangay" :options="barangays" optionValue="name" optionLabel="name" placeholder="Select a Barangay"/>
+    </div>
+
+    <div class="p-field">
+      <Dropdown v-model="userType" :options="userTypes" optionValue="name" optionLabel="name" placeholder="Select a User Type"/>
     </div>
 
     <!-- Password Input and Validation -->
@@ -81,12 +85,17 @@ export default {
     const router = useRouter()
 
     const barangays = ref([
-            {name: 'New York', code: 'NY'},
-            {name: 'Rome', code: 'RM'},
-            {name: 'London', code: 'LDN'},
-            {name: 'Istanbul', code: 'IST'},
-            {name: 'Paris', code: 'PRS'}
+            {name: 'New York'},
+            {name: 'Rome'},
+            {name: 'London'},
+            {name: 'Istanbul'},
+            {name: 'Paris'}
     ]);
+    
+    const userTypes = ref([
+        {name: 'Farmer'},
+        {name: 'Buyer'}
+    ])
     
     const state = reactive({
       name: '',
@@ -105,20 +114,20 @@ export default {
     }))
 
     const submitted = ref(false)
-    const barangay = ref('')
+    const barangay = ref()
+    const userType = ref()
     
     const v$ = useVuelidate(rules, state)
 
     const handleSubmit = async (isFormValid) => {
             submitted.value = true;
             
-            console.log(state.phoneNumber)
-
             if (!isFormValid) {
                 return;
             }
 
-            await signup(state.email, state.password, state.name, state.phoneNumber, barangay.value)
+            await signup(state.email, state.password, state.name, state.phoneNumber, barangay.value, userType.value)
+            console.log(barangay.value, userType.value)
             
             if (!error.value) {
               router.push('/home')
@@ -137,7 +146,7 @@ export default {
             submitted.value = false;
     }
 
-    return { state, v$, handleSubmit, submitted, barangays, barangay, error }
+    return { state, v$, handleSubmit, submitted, barangays, barangay, userTypes, userType, error }
   }
 };
 </script>
