@@ -78,10 +78,12 @@ import { useRouter } from 'vue-router'
 import { email, required, sameAs } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import useSignup from '../composables/useSignup'
+import useCounter from "../composables/useCounter";
 
 export default {
   setup() {
     const { signup, error } = useSignup()
+    const { increment } = useCounter("users", "userCounter", "totalUsers")
     const router = useRouter()
 
     const barangays = ref([
@@ -127,7 +129,12 @@ export default {
             }
 
             await signup(state.email, state.password, state.name, state.phoneNumber, barangay.value, userType.value)
-            console.log(barangay.value, userType.value)
+
+            if (userType.value == 'Farmer') {
+              await increment("farmer")
+            } else {
+              await increment("market")
+            }
             
             if (!error.value) {
               router.push('/home')

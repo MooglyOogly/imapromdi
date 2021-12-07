@@ -13,7 +13,7 @@ const getCounter = (c, d, f) => {
   const unsub = onSnapshot(docRef, doc => {
     if(doc.data()) {
       document.value = doc.get(f)
-      console.log('Composable: Total Users', document.value)
+      console.log('Composable Counter:', document.value)
       error.value = null
     }
     else {

@@ -21,6 +21,8 @@ import Column from 'primevue/column'
 import ColumnGroup from 'primevue/columngroup'
 import Chart from 'primevue/chart'
 import Card from 'primevue/card'
+import TabMenu from 'primevue/tabmenu'
+import Toolbar from 'primevue/toolbar'
 
 // PrimeVue Imports
 import 'primevue/resources/themes/lara-light-teal/theme.css'  //theme
@@ -52,5 +54,7 @@ app.component('Column', Column)
 app.component('ColumnGroup', ColumnGroup)
 app.component('Chart', Chart)
 app.component('Card', Card)
+app.component('TabMenu', TabMenu)
+app.component('Toolbar', Toolbar)
 
 app.mount("#app");

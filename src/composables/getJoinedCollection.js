@@ -17,7 +17,7 @@ const getJoinedCollection= (c1, c2) => {
         let results = []
         snapshot1.docs.forEach(doc1 => {
          snapshot2.docs.forEach(doc2 => {
-          if(doc1.get('userId') === doc2.get('userId')) {
+          if(doc1.get('userId') === doc2.get('userId') && doc1.id != '--stats--') {
             results.push({ ...doc1.data(), ...doc2.data(), id: doc1.id, id: doc2.id })
            } 
           })

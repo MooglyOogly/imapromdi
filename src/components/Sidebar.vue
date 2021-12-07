@@ -7,33 +7,12 @@ export default {
   setup() {
     const menu = [
       {
-        label: 'Dashboard',
-        icon: 'pi pi-home',
-        to: { name: 'Home'}
+        label: 'Commodity Info',
+        to: { name: 'CommodityInfo' }
       },
       {
-        label: 'Farm Information',
-        to: { name: 'FarmInfo'}
-      }, 
-      {
-        label: 'Farmer Information'
+        label: 'Market Info'
       },
-      {
-        label: 'Crops formation'
-      }, 
-      {
-        label: 'Livestock Information'
-      }, 
-      {
-        label: 'Poultry Information'
-      },
-      {
-        label: 'Fishery Information'
-      },
-      {
-        label: 'Trees Information'
-      },   
-      
     ]
     
     return { menu }

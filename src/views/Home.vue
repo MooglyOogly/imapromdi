@@ -3,9 +3,9 @@
     <div class="col">
         <Navbar />
     </div>
-    <div class="col-fixed flex">
+    <!-- <div class="col-fixed flex">
       <Sidebar />  
-    </div>
+    </div> -->
     <div class="col field">
       <div class="grid">
         <div class="col field">
@@ -75,22 +75,10 @@ export default {
     // const { user } = getUser()
     const { documents: summary } = getJoinedCollection( 'farm', 'commodity' )
     const { documents: users } = getSingleCollection( 'users', ['type', '==', 'Farmer'] )
-    // const { error, document: userCount } = getCounter( 'users', 'userCounter' )
-    const { error, document: totalUsers } = getCounter( 'users', 'userCounter', 'totalUsers')
-    const { erro, document: farmerUsers } = getCounter( 'users', 'userCounter', 'farmerUsers')
-    const { err, document: marketUsers } = getCounter( 'users', 'userCounter', 'marketUsers')
+    const { document: totalUsers } = getCounter( 'users', '--stats--', 'userCount')
+    const { document: farmerUsers } = getCounter( 'users', '--stats--', 'farmerCount')
+    const { document: marketUsers } = getCounter( 'users', '--stats--', 'marketCount')
 
-    // const docRef = doc(db, 'users', user.value.uid)
-    // // const docSnap = await getDoc(docRef)
-
-    // getDoc(docRef).then(docSnap => {
-    //   if (docSnap.exists()) {
-    //     console.log("Document data:", docSnap.data())
-    //   } else {
-    //     console.log("No such document")o
-    //   }
-    // }
-    
     console.log(totalUsers)
     
     return { summary, users, totalUsers, farmerUsers, marketUsers }

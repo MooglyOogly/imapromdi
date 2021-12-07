@@ -1,12 +1,12 @@
 <template>
   <div class="grid">
     <div class="col">
-        <Navbar />
+      <Navbar />
     </div>
-    <div class="col-fixed flex">
+    <div class="col-fixed flex m-1">
       <Sidebar />  
     </div>
-    <div class="col field">
+    <div class="col field m-1">
       <DataTable :value="farms" responsiveLayout="scroll">
           <Column field="id" header="Farm ID"></Column>
           <Column field="farmName" header="Farm Name"></Column>
@@ -20,15 +20,16 @@
 </template>
 
 <script>
+import { ref } from '@vue/reactivity'
+
 import Navbar from '../components/Navbar.vue'
 import Sidebar from '../components/Sidebar.vue'
+import TabInfo from '../components/TabInfo.vue'
 import getSingleCollection from '../composables/getSingleCollection'
 
-import { db } from '../firebase/config'
-import { doc, deleteDoc, updateDoc } from 'firebase/firestore'
-
 export default {
-  components: { Navbar, Sidebar },
+
+  components: { Navbar, Sidebar, TabInfo },
   setup() {
     const { documents: farms } = getSingleCollection(
       'farm'

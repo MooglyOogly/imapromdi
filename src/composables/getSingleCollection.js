@@ -18,7 +18,21 @@ const getSingleCollection = (c, q) => {
   const unsub = onSnapshot(colRef, snapshot => {
     let results = []
     snapshot.docs.forEach(doc => {
-      results.push({ ...doc.data(), id: doc.id })
+      if(doc.id != '--stats--') {
+        if(doc.get('plantingDate') || doc.get('expectedHarvest')) {
+          const plantDate = doc.get('plantingDate').toDate().toDateString()
+          const harvestDate = doc.get('expectedHarvest').toDate().toDateString()
+          results.push({ ...doc.data(), plantDate: plantDate, harvestDate: harvestDate, id: doc.id })
+
+        } else if (doc.get('dateFarrowed') || doc.get('dateHatched')) {
+          const farrowDate = doc.get('dateFarrowed').toDate().toDateString()
+          // const hatchDate = doc.get('dateHatched').toDate().toDateString()
+          results.push({ ...doc.data(), farrowDate: farrowDate, id: doc.id })
+
+        } else {
+          results.push({ ...doc.data(), id: doc.id })
+        }
+      }
     })
     
     // update values
