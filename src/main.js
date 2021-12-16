@@ -23,9 +23,15 @@ import Chart from 'primevue/chart'
 import Card from 'primevue/card'
 import TabMenu from 'primevue/tabmenu'
 import Toolbar from 'primevue/toolbar'
+import ToastService from 'primevue/toastservice'
+import Toast from 'primevue/toast'
+import RadioButton from 'primevue/radiobutton'
+import FileUpload from 'primevue/fileupload'
+import Textarea from 'primevue/textarea'
+import InputNumber from 'primevue/inputnumber'
 
 // PrimeVue Imports
-import 'primevue/resources/themes/lara-light-teal/theme.css'  //theme
+import 'primevue/resources/themes/saga-orange/theme.css'  //theme
 import 'primevue/resources/primevue.min.css'                 //core css
 import 'primeflex/primeflex.css'
 import 'primeicons/primeicons.css'                           //icons
@@ -35,6 +41,7 @@ const app = createApp(App);
 
 app.use(router)
 app.use(PrimeVue)
+app.use(ToastService)
 
 // PrimeVue Components Mounting
 app.component('Dialog', Dialog)
@@ -56,5 +63,10 @@ app.component('Chart', Chart)
 app.component('Card', Card)
 app.component('TabMenu', TabMenu)
 app.component('Toolbar', Toolbar)
+app.component('Toast', Toast)
+app.component('RadioButton', RadioButton)
+app.component('FileUpload', FileUpload)
+app.component('Textarea', Textarea)
+app.component('InputNumber', InputNumber)
 
 app.mount("#app");

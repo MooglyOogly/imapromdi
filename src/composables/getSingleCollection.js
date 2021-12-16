@@ -19,16 +19,16 @@ const getSingleCollection = (c, q) => {
     let results = []
     snapshot.docs.forEach(doc => {
       if(doc.id != '--stats--') {
-        if(doc.get('plantingDate') || doc.get('expectedHarvest')) {
-          const plantDate = doc.get('plantingDate').toDate().toDateString()
-          const harvestDate = doc.get('expectedHarvest').toDate().toDateString()
+        if(doc.get('plantDate') && doc.get('harvestDate')) {
+          const plantDate = doc.get('plantDate').toDate().toDateString()
+          const harvestDate = doc.get('harvestDate').toDate().toDateString()
           results.push({ ...doc.data(), plantDate: plantDate, harvestDate: harvestDate, id: doc.id })
-
-        } else if (doc.get('dateFarrowed') || doc.get('dateHatched')) {
-          const farrowDate = doc.get('dateFarrowed').toDate().toDateString()
-          // const hatchDate = doc.get('dateHatched').toDate().toDateString()
-          results.push({ ...doc.data(), farrowDate: farrowDate, id: doc.id })
-
+        } else if (doc.get('harvestDate')) {
+          const harvestDate = doc.get('harvestDate').toDate().toDateString()
+          results.push({...doc.data(), harvestDate: harvestDate, id: doc.id })
+        } else if (doc.get('birthdate')) {
+          const birthdate = doc.get('birthdate').toDate().toDateString()
+          results.push({ ...doc.data(), birthdate: birthdate, id: doc.id })
         } else {
           results.push({ ...doc.data(), id: doc.id })
         }

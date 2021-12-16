@@ -39,7 +39,7 @@ const useCounter = (c, d) => {
             nCount = doc.data().farmCount + 1
             transcation.update(docRef, { farmCount : nCount})
             break;
-          case 'crop':
+          case 'crops':
             nCount = doc.data().cropCount + 1
             mCount = doc.data().commodityCount + 1
             transcation.update(docRef, { cropCount : nCount, commodityCount : mCount })

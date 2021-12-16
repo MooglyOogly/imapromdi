@@ -83,7 +83,7 @@ import useCounter from "../composables/useCounter";
 export default {
   setup() {
     const { signup, error } = useSignup()
-    const { increment } = useCounter("users", "userCounter", "totalUsers")
+    const { increment } = useCounter("users", "--stats--")
     const router = useRouter()
 
     const barangays = ref([

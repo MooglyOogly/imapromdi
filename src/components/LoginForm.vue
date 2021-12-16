@@ -15,7 +15,7 @@
         <small v-if="(v$.password.$invalid && submitted) || v$.password.$pending.$response" class="p-error">{{v$.password.required.$message.replace('Value', 'Password')}}</small>
       </div>
       <small v-if="error" class="p-error">{{ error }}</small>
-    <Button type="submit" label="Submit" class="p-mt-2" />
+    <Button type="submit" label="Login" class="p-mt-2" />
   </form>
 </template>
 

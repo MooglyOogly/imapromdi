@@ -1,5 +1,5 @@
 <template>
-  <Menu class="grid border-noround w-auto h-screen" :model='menu' />
+  <Menu class="border-noround h-screen" :model='menu' />
 </template>
 
 <script>
